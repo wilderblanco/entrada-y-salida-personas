@@ -58,4 +58,4 @@ def actualizarsalida(request):
     salida=Registro.objects.get(id=idhtml)
     salida.Fecha_Salida=Fecha_Salidahtml
     salida.save()
-    return redirect('listarregistrossalida')
+    return redirect('registrosalida')
