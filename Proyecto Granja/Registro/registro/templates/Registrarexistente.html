@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <a href="{% url 'paginaprincipal' %}" class="btn btn-success">Volver</a>
-    <form action="{% url 'guardarregistro' %}" method="post">
+    <form action="{% url 'guardarregistro' %}" method="post" autocomplete="on">
         {% csrf_token %}
     <div class="container">
         <div class="row">

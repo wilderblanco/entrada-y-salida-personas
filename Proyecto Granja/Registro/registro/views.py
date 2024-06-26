@@ -41,4 +41,21 @@ def guardarregistro(request):
                                             Observacion = Observacionhtml)
     return redirect('paginaprincipal')
 
-   
+def registroexistente(request):
+    return render(request, 'Registrarexistente.html')
+
+def listarregistrossalida(request):
+    listarregistros= Registro.objects.all()
+    return render(request, 'Registrarsalida.html', {'listarregistros': listarregistros})
+
+def irregistrarsalida(request,id):
+    salida=Registro.objects.get(id=id)
+    return render(request, 'Registrarsalidactualizar.html',{'salida': salida})
+
+def actualizarsalida(request):
+    idhtml= request.POST['id']
+    Fecha_Salidahtml = request.POST['salida']
+    salida=Registro.objects.get(id=idhtml)
+    salida.Fecha_Salida=Fecha_Salidahtml
+    salida.save()
+    return redirect('listarregistrossalida')

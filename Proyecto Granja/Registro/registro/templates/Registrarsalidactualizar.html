@@ -8,14 +8,15 @@
 </head>
 <body>
 <div class="container">
-    <a href="{% url 'paginaprincipal' %}" class="btn btn-success">Volver</a>
-    <form action="{% url 'guardarregistro' %}" method="post">
+    <a href="{% url 'registrosalida' %}" class="btn btn-success">Volver</a>
+    <form action="{% url 'guardarregistro' %}" method="post" autocomplete="on">
         {% csrf_token %}
     <div class="container">
         <div class="row">
             <div class="col-6">
+              <input type="hidden" id="id" name="id" value="{{salida.id}}">
               <label for="" class="form-label">Tipo de Documento</label>
-              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipodocumento" name="tipodocumento">
+              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipodocumento" name="tipodocumento" value="{{salida.Tipo_Documento}}">
                 <option selected >Seleccione el tipo de documento</option>
                 <option value="Cedula Ciudadania">Cedula Ciudadania</option>
                 <option value="Tarjeta De Identidad">Tarjeta De Identidad</option>
@@ -23,39 +24,39 @@
             </div>
           <div class="col-6">
             <label for="" class="form-label">Documento</label>
-            <input type="text" class="form-control" id="documento" name="documento">
+            <input type="text" class="form-control" id="documento" name="documento" value="{{salida.Numero}}">
           </div>
           <div class="col-4">
             <label for="" class="form-label">Nombres</label>
-            <input type="text" class="form-control" id="nombres" name="nombres">
+            <input type="text" class="form-control" id="nombres" name="nombres" value="{{salida.Nombres}}">
           </div>
           <div class="col-4">
             <label for="" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" id="apellidos" name="apellidos">
+            <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{salida.Apellidos}}">
           </div>
           <div class="col-4">
             <label for="" class="form-label">lugar de procedencia</label>
-            <input type="text" class="form-control" id="lugarprocedencia" name="lugarprocedencia">
+            <input type="text" class="form-control" id="lugarprocedencia" name="lugarprocedencia" value="{{salida.Lugar_Procedencia}}">
           </div>
           <div class="col-8">
             <label for="" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="Correo" name="Correo">
+            <input type="email" class="form-control" id="Correo" name="Correo" value="{{salida.Correo}}">
           </div>
           <div class="col-4">
             <label for="" class="form-label">Telefono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono">
+            <input type="text" class="form-control" id="telefono" name="telefono" value="{{salida.Telefono}}">
           </div>
           <div class="col-6">
             <label for="" class="form-label">Entrada</label>
-            <input type="text" class="form-control" id="entrada" name="entrada">
+            <input type="text" class="form-control" id="entrada" name="entrada" value="{{salida.Fecha_Ingreso}}">
           </div>
           <div class="col-6">
             <label for="" class="form-label">Salida</label>
-            <input type="text" class="form-control" id="salida" name="salida">
+            <input type="text" class="form-control" id="salida" name="salida" value="{{salida.Fecha_Salida}}">
           </div>
           <div class="col-3">
             <label for="" class="form-label">Tipo de vinculacion</label>
-            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovinculacion" name="tipovinculacion">
+            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovinculacion" name="tipovinculacion" value="{{salida.Tipo_Vinculacion}}">
                 <option selected >Seleccione la dependencia</option>
                 <option value="Aprendiz">Aprendiz</option>
                 <option value="Contratista">Contratista</option>
@@ -67,7 +68,7 @@
           </div>
           <div class="col-3">
             <label for="" class="form-label">Dependencia</label>
-            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="dependencia" name="dependencia">
+            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="dependencia" name="dependencia" value="{{salida.Dependencia}}">
                 <option selected >Seleccione la dependencia</option>
                 <option value="1"> Granja</option>
                 <option value="2">Laboratorio de FIC</option>
@@ -81,7 +82,7 @@
           </div>
           <div class="col-3">
             <label for="" class="form-label">Tipo de vehiculo</label>
-              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovehiculo" name="tipovehiculo">
+              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovehiculo" name="tipovehiculo" value="{{salida.Tipo_Vehiculo}}">
                 <option selected >Seleccione el tipo de vehiculo</option>
                 <option value="Carro">Carro</option>
                 <option value="Moto">Moto</option>
@@ -91,7 +92,7 @@
           </div >
           <div class="col-3">
             <label for="" class="form-label">Placa</label>
-            <input type="text" class="form-control" id="placa" name="placa"> 
+            <input type="text" class="form-control" id="placa" name="placa" value="{{salida.Placa_Vehiculo}}"> 
           </div>
         </div>
         <br>
@@ -99,14 +100,14 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <textarea class="form-control" placeholder="Objetivo de la visita" id="objetivovisita" name="objetivovisita"></textarea>
+            <textarea class="form-control" placeholder="Objetivo de la visita" id="objetivovisita" name="objetivovisita" value="{{salida.Objeto_Visita}}"></textarea>
           </div>
           <div class="col-6">
-            <textarea class="form-control" placeholder="Observacion" id="observacion" name="observacion"></textarea>
+            <textarea class="form-control" placeholder="Observacion" id="observacion" name="observacion" value="{{salida.Observacion}}"></textarea>
           </div>
     </div>
     <br>
-          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="submit" class="btn btn-primary">Aceptar</button>
 </div>
 
     

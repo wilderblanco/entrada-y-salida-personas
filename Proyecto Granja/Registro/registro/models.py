@@ -5,7 +5,7 @@ from django.db import models
 class Registro(models.Model):
     id = models.AutoField(primary_key=True)
     Tipo_Documento = models.CharField(max_length=30)
-    Numero = models.CharField(max_length=15, unique=True)
+    Numero = models.CharField(max_length=15)
     Nombres = models.CharField(max_length=25)
     Apellidos =	models.CharField(max_length=25)
     Lugar_Procedencia =	models.CharField(max_length=13)
