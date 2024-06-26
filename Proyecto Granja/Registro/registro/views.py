@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .models import Registro
 
 # Create your views here.
@@ -59,3 +61,15 @@ def actualizarsalida(request):
     salida.Fecha_Salida=Fecha_Salidahtml
     salida.save()
     return redirect('registrosalida')
+
+
+@login_required
+def listaregistros(request):
+    listarregistros= Registro.objects.all()
+    return render(request, 'listaregistrosguardados.html', {'listarregistros': listarregistros})
+
+def exit(request):
+    logout(request)
+    return redirect('paginaprincipal')
+
+    

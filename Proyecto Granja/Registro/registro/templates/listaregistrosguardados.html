@@ -1,0 +1,71 @@
+{% extends "Paginaprincipal.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <table class="table table-bordered border-primary">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Tipo de Tipo de documento</th>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Lugar de procedencia</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Fecha de ingreso</th>
+                    <th scope="col">Fecha de salida</th>
+                    <th scope="col">Tipo de vinculacion</th>
+                    <th scope="col">Dependencia</th>
+                    <th scope="col">Tipo de vehiculo</th>
+                    <th scope="col">Placa del vehiculo</th>
+                    <th scope="col">Objeto visita</th>
+                    <th scope="col">observaciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for lista in listarregistros %}
+                    <tr>
+                        <td>{{lista.id}}</td>
+                        <td>{{lista.Tipo_Documento}}</td>
+                        <td>{{lista.Numero}}</td>
+                        <td>{{lista.Nombres}}</td>
+                        <td>{{lista.Apellidos}}</td>
+                        <td>{{lista.Lugar_Procedencia}}</td>
+                        <td>{{lista.Correo}}</td>
+                        <td>{{lista.Telefono}}</td>
+                        <td>{{lista.Fecha_Ingreso}}</td>
+                        <td>{{lista.Fecha_Salida}}</td>
+                        <td>{{lista.Tipo_Vinculacion}}</td>
+                        <td>{{lista.Dependencia}}</td>
+                        <td>{{lista.Tipo_Vehiculo}}</td>
+                        <td>{{lista.Placa_Vehiculo}}</td>
+                        <td>{{lista.Objeto_Visita}}</td>
+                        <td>{{lista.Observacion}}</td>
+                    </tr>
+                    {% endfor%}
+                
+                </tbody>
+            </table>
+        </div>
+
+        
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
+
+{% endblock %}
