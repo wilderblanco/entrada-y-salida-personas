@@ -1,7 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Registro
+from django.http import HttpResponseBadRequest
+from datetime import datetime
 
 # Create your views here.
 def Pagina_Principal(request):
@@ -54,13 +56,27 @@ def irregistrarsalida(request,id):
     salida=Registro.objects.get(id=id)
     return render(request, 'Registrarsalidactualizar.html',{'salida': salida})
 
+
 def actualizarsalida(request):
-    idhtml= request.POST['id']
-    Fecha_Salidahtml = request.POST['salida']
-    salida=Registro.objects.get(id=idhtml)
-    salida.Fecha_Salida=Fecha_Salidahtml
-    salida.save()
-    return redirect('registrosalida')
+    if request.method == 'POST':
+        idhtml = request.POST.get('id')
+        
+        if not idhtml:
+            return HttpResponseBadRequest("Falta el ID.")
+
+        # Obtener el registro, si no existe, devolverá un 404
+        salida = get_object_or_404(Registro, id=idhtml)
+
+        # Obtener la fecha actual
+        fecha_salida = datetime.now().strftime('%Y-%m-%d')
+
+        # Actualizar la fecha de salida
+        salida.Fecha_Salida = fecha_salida
+        salida.save()
+
+        return redirect('registrosalida')
+
+    return HttpResponseBadRequest("Método no permitido.")
 
 
 @login_required
@@ -71,5 +87,3 @@ def listaregistros(request):
 def exit(request):
     logout(request)
     return redirect('paginaprincipal')
-
-    

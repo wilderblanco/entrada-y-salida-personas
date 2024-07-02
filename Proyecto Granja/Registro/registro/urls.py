@@ -10,5 +10,5 @@ urlpatterns = [
  path('registrarsalida/', views.listarregistrossalida, name='registrosalida'),
  path('actualizarregistro/', views.actualizarsalida, name="actualizar"),
  path('listado/', views.listaregistros, name="listaregistros"),
- path('logout/', views.exit , name="exit")
+ path('logout/', views.exit , name="exit"),
 ]
