@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+      body {
+          font-family: Arial, sans-serif; /* Fuente principal */
+          background-color: #d6aee6; /* Color de fondo */
+          padding-top: 5rem; /* Espacio superior */
+      }
+
+      .container {
+          margin-top: 2rem; /* Margen superior */
+          background-color: #ffffff; /* Fondo del contenedor */
+          padding: 2rem; /* Espaciado interno */
+          border-radius: 8px; /* Bordes redondeados */
+          box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra ligera */
+      }
+
+      .form-control {
+          margin-bottom: 1rem; /* Margen inferior de los controles */
+      }
+
+      textarea.form-control {
+          resize: vertical; /* Permitir redimensionar verticalmente solo los textarea */
+      }
+
+      .btn-primary {
+          margin-top: 1rem; /* Margen superior para el botón Registrar */
+      }
+  </style>
+  </head>
+<body>
+<div class="container">
+    <a href="{% url 'paginaprincipal' %}" class="btn btn-success">Volver</a>
+    <form action="{% url 'guardarregistro' %}" method="post">
+        {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+              <label for="" class="form-label">Tipo de Documento</label>
+              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipodocumento" name="tipodocumento">
+                <option selected >Seleccione el tipo de documento</option>
+                <option value="Cedula Ciudadania">Cedula Ciudadania</option>
+                <option value="Tarjeta De Identidad">Tarjeta De Identidad</option>
+              </select>
+            </div>
+          <div class="col-6">
+            <label for="" class="form-label">Documento</label>
+            <input type="text" class="form-control" id="documento" name="documento">
+          </div>
+          <div class="col-4">
+            <label for="" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombres" name="nombres">
+          </div>
+          <div class="col-4">
+            <label for="" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" name="apellidos">
+          </div>
+          <div class="col-4">
+            <label for="" class="form-label">lugar de procedencia</label>
+            <input type="text" class="form-control" id="lugarprocedencia" name="lugarprocedencia">
+          </div>
+          <div class="col-8">
+            <label for="" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="Correo" name="Correo">
+          </div>
+          <div class="col-4">
+            <label for="" class="form-label">Telefono</label>
+            <input type="text" class="form-control" id="telefono" name="telefono">
+          </div>
+          <div class="col-6">
+            <label for="" class="form-label">Entrada</label>
+            <input type="text" class="form-control" id="entrada" name="entrada">
+          </div>
+          <div class="col-6">
+            <label for="" class="form-label">Salida</label>
+            <input type="text" class="form-control" id="salida" name="salida">
+          </div>
+          <div class="col-3">
+            <label for="" class="form-label">Tipo de vinculacion</label>
+            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovinculacion" name="tipovinculacion">
+                <option selected >Seleccione la dependencia</option>
+                <option value="Aprendiz">Aprendiz</option>
+                <option value="Contratista">Contratista</option>
+                <option value="Funcionario">Funcionario</option>
+                <option value="Instructor">Instructor</option>
+                <option value="Subcontratista">Subcontratista</option>
+                <option value="Visitante">Visitante</option>
+              </select>	
+          </div>
+          <div class="col-3">
+            <label for="" class="form-label">Dependencia</label>
+            <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="dependencia" name="dependencia">
+              <option selected >Seleccione la dependencia</option>
+              <option value="Granja"> Granja</option>
+              <option value="Laboratorio de FIC">Laboratorio de FIC</option>
+              <option value="Torre de alturas">Torre de alturas</option>
+              <option value="Almacén">Almacén</option>
+              <option value="Laboratorio de suelos agrícolas">Laboratorio de suelos agrícolas</option>
+              <option value="Laboratorio de biotecnología6">Laboratorio de biotecnología</option>
+              <option value="Soporte técnico">Soporte técnico</option>
+              <option value="Agroindustria">Agroindustria</option>
+              </select>	
+          </div>
+          <div class="col-3">
+            <label for="" class="form-label">Tipo de vehiculo</label>
+              <select  class="form-select" aria-label="Default select example" class="p-3 mb-2 bg-info text-dark" id="tipovehiculo" name="tipovehiculo">
+                <option selected >Seleccione el tipo de vehiculo</option>
+                <option value="Carro">Carro</option>
+                <option value="Moto">Moto</option>
+                <option value="Bicicleta">Bicicleta</option>
+                <option value="N/A">N/A</option>
+              </select>
+          </div >
+          <div class="col-3">
+            <label for="" class="form-label">Placa</label>
+            <input type="text" class="form-control" id="placa" name="placa"> 
+          </div>
+        </div>
+        <br>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <textarea class="form-control" placeholder="Objetivo de la visita" id="objetivovisita" name="objetivovisita"></textarea>
+          </div>
+          <div class="col-6">
+            <textarea class="form-control" placeholder="Observacion" id="observacion" name="observacion"></textarea>
+          </div>
+    </div>
+    <br>
+          <button type="submit" class="btn btn-primary">Registrar</button>
+</div>
+
+    
+    </form>      
+    
+    
+    
+</div>    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
