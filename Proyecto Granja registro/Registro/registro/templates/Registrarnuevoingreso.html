@@ -132,6 +132,12 @@
             <textarea class="form-control" placeholder="Observacion" id="observacion" name="observacion"></textarea>
           </div>
     </div>
+    <div class="col-6">
+    <video id="video" width="200" height="200" autoplay></video><br>
+    <input type="hidden" id="image_data" name="image_data">
+    <button id="capture-btn">Capturar Foto</button><br>
+    <canvas id="canvas" width="200" height="200" style="display:none;"></canvas>
+    
     <br>
           <button type="submit" class="btn btn-primary">Registrar</button>
 </div>
@@ -142,6 +148,53 @@
     
     
 </div>    
+<script>
+  // JavaScript para la captura de fotos desde la cámara
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const captureButton = document.getElementById('capture-btn');
+  
+  // Acceder a la cámara del usuario
+  navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+          video.srcObject = stream;
+      })
+      .catch(error => {
+          console.error('Error al acceder a la cámara.', error);
+      });
+  
+  // Capturar foto cuando se presiona el botón
+  captureButton.addEventListener('click', () => {
+      const context = canvas.getContext('2d');
+      // Asegúrate de que el canvas tenga las mismas dimensiones que el video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      // Convertir la imagen del canvas a formato base64
+      const imageData = canvas.toDataURL('image/png');
+      
+      // Enviar la imagen al servidor Django
+      fetch('/capture_photo/', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': '{{ csrf_token }}'  // Agrega el token CSRF para protección
+          },
+          body: JSON.stringify({ image_data: imageData })
+      })
+      .then(response => {
+          if (response.ok) {
+              console.log('Foto capturada y enviada correctamente.');
+          } else {
+              console.error('Error al enviar la foto.');
+          }
+      })
+      .catch(error => {
+          console.error('Error en la solicitud fetch:', error);
+      });
+  });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

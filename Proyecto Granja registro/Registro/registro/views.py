@@ -1,10 +1,12 @@
+import base64
+import json
 from django.shortcuts import render,redirect,  get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .models import Registro
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, JsonResponse
 from datetime import datetime
-
+import os
 
 # Create your views here.
 def Pagina_Principal(request):
@@ -45,6 +47,7 @@ def guardarregistro(request):
                                             Objeto_Visita= Objeto_Visitahtml,
                                             Observacion = Observacionhtml)
     return redirect('paginaprincipal')
+
 
 def registroexistente(request):
     return render(request, 'Registrarexistente.html')
@@ -89,3 +92,20 @@ def exit(request):
     logout(request)
     return redirect('paginaprincipal')
 
+def capture_photo(request):
+    if request.method == 'POST':
+        # Recibir los datos JSON del cuerpo de la solicitud
+        data = json.loads(request.body)
+        image_data = data.get('image_data', None)
+        
+        if image_data:
+            # Aquí puedes procesar la imagen recibida (guardarla, procesarla, etc.)
+            # Ejemplo: Guardar la imagen en el sistema de archivos
+            with open('captured_photo.png', 'wb') as f:
+                f.write(base64.b64decode(image_data.split(',')[1]))  # Decodificar la imagen base64
+            
+            return JsonResponse({'message': 'Foto recibida y procesada correctamente.'})
+        else:
+            return JsonResponse({'error': 'No se recibió ninguna imagen.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Método no permitido.'}, status=405)

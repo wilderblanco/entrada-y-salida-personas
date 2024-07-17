@@ -11,4 +11,5 @@ urlpatterns = [
  path('actualizarregistro/', views.actualizarsalida, name="actualizar"),
  path('listado/', views.listaregistros, name="listaregistros"),
  path('logout/', views.exit , name="exit"),
-]
+ path('capture_photo/', views.capture_photo, name='capture_photo'),
+ ]

@@ -36,7 +36,7 @@
 <body>
 <div class="container">
     <a href="{% url 'registrosalida' %}" class="btn btn-success">Volver</a>
-    <form action="{% url 'actualizar' %}" method="post" autocomplete="on">
+    <form action="{% url 'actualizar' %}" method="post">
         {% csrf_token %}
     <div class="container">
         <div class="row">
