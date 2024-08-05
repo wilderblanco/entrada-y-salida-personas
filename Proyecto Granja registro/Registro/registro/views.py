@@ -60,6 +60,11 @@ def irregistrarsalida(request,id):
     salida=Registro.objects.get(id=id)
     return render(request, 'Registrarsalidactualizar.html',{'salida': salida})
 
+def eliminarregistro(request,id):
+    Eliminar = Registro.objects.get(id=id)
+    Eliminar.delete()
+    return redirect('listaregistros')
+
 
 def actualizarsalida(request):
     if request.method == 'POST':

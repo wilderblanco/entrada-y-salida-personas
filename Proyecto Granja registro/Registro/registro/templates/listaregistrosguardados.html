@@ -75,6 +75,7 @@
                     <th scope="col">Placa del vehiculo</th>
                     <th scope="col">Objeto visita</th>
                     <th scope="col">observaciones</th>
+                    <th scope="col">Opciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,6 +97,7 @@
                         <td>{{lista.Placa_Vehiculo}}</td>
                         <td>{{lista.Objeto_Visita}}</td>
                         <td>{{lista.Observacion}}</td>
+                        <td><a href="{% url 'eliminar' lista.id %}" class="btn btn-success">eliminar</a></td>
                     </tr>
                     {% endfor%}
                 
