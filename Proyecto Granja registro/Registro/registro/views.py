@@ -53,7 +53,7 @@ def registroexistente(request):
     return render(request, 'Registrarexistente.html')
 
 def listarregistrossalida(request):
-    listarregistros= Registro.objects.all()
+    listarregistros = Registro.objects.filter(Actualizado=False)
     return render(request, 'Registrarsalida.html', {'listarregistros': listarregistros})
 
 def irregistrarsalida(request,id):
@@ -72,10 +72,11 @@ def actualizarsalida(request):
         salida = get_object_or_404(Registro, id=idhtml)
 
         # Obtener la fecha actual
-        fecha_salida = datetime.now().strftime('%Y-%m-%d')
+        fecha_salida = datetime.now()
 
-        # Actualizar la fecha de salida
+        # Actualizar la fecha de salida y el estado
         salida.Fecha_Salida = fecha_salida
+        salida.Actualizado = True
         salida.save()
 
         return redirect('registrosalida')
