@@ -1,5 +1,9 @@
 from django.db import models
 
+def capitalize_words(text):
+    """ Capitaliza la primera letra de cada palabra en el texto. """
+    return ' '.join(word.capitalize() for word in text.split())
+
 class Registro(models.Model):
     id = models.AutoField(primary_key=True)
     Tipo_Documento = models.CharField(max_length=30)
@@ -18,3 +22,24 @@ class Registro(models.Model):
     Objeto_Visita = models.TextField(max_length=100)
     Observacion = models.TextField(max_length=100)
     Actualizado = models.BooleanField(default=False)  # Nuevo campo
+    
+    def save(self, *args, **kwargs):
+            # Aplicar capitalización a los campos que lo requieren
+            self.Nombres = capitalize_words(self.Nombres)
+            self.Apellidos = capitalize_words(self.Apellidos)
+            self.Lugar_Procedencia = capitalize_words(self.Lugar_Procedencia)
+            self.Tipo_Documento = self.Tipo_Documento.capitalize()
+            self.Numero = self.Numero.capitalize()
+            self.Correo = self.Correo.lower()  # Normalizar a minúsculas por convención
+            self.Telefono = self.Telefono.capitalize()
+            self.Tipo_Vinculacion = self.Tipo_Vinculacion.capitalize()
+            self.Dependencia = self.Dependencia.capitalize()
+            self.Tipo_Vehiculo = self.Tipo_Vehiculo.capitalize()
+            self.Placa_Vehiculo = self.Placa_Vehiculo.upper()  # Normalizar a mayúsculas por convención
+            self.Objeto_Visita = self.Objeto_Visita.capitalize()
+            self.Observacion = self.Observacion.capitalize()
+
+            super().save(*args, **kwargs)
+            
+            
+        

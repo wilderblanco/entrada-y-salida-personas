@@ -7,6 +7,7 @@ from .models import Registro
 from django.http import HttpResponseBadRequest, JsonResponse
 from datetime import datetime
 import os
+from django.db.models import Q
 
 # Create your views here.
 def Pagina_Principal(request):
@@ -50,10 +51,31 @@ def guardarregistro(request):
 
 
 def registroexistente(request):
+    if request.method == 'POST':
+        documento = request.POST.get('documento')
+        try:
+            # Buscar el registro por número de documento
+            registro = Registro.objects.get(Numero=documento)
+            # Mostrar el registro encontrado, independientemente de si está actualizado o no
+            return render(request, 'Registrarexistente.html', {'registro': registro})
+        except Registro.DoesNotExist:
+            # Manejar el caso en que no se encuentra el registro
+            return render(request, 'Registrarexistente.html', {'error': 'No se encontró un registro con ese documento.'})
     return render(request, 'Registrarexistente.html')
 
 def listarregistrossalida(request):
-    listarregistros = Registro.objects.filter(Actualizado=False)
+    query = request.GET.get('q')
+    if query:
+        listarregistros = Registro.objects.filter(
+            Q(Nombres__icontains=query) | 
+            Q(Apellidos__icontains=query) |
+            Q(Tipo_Documento__icontains=query) | 
+            Q(Numero__icontains=query),
+            Actualizado=False  # Asegura que solo filtre los registros de salida pendientes
+        )
+    else:
+        listarregistros = Registro.objects.filter(Actualizado=False)
+    
     return render(request, 'Registrarsalida.html', {'listarregistros': listarregistros})
 
 def irregistrarsalida(request,id):
@@ -115,3 +137,4 @@ def capture_photo(request):
             return JsonResponse({'error': 'No se recibió ninguna imagen.'}, status=400)
     else:
         return JsonResponse({'error': 'Método no permitido.'}, status=405)
+    
