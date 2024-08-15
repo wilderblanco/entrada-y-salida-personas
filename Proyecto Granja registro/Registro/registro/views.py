@@ -6,8 +6,11 @@ from django.contrib.auth import logout
 from .models import Registro
 from django.http import HttpResponseBadRequest, JsonResponse
 from datetime import datetime
-import os
 from django.db.models import Q
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import io
+import base64
 
 # Create your views here.
 def Pagina_Principal(request):
@@ -32,35 +35,49 @@ def guardarregistro(request):
     Placa_Vehiculohtml = request.POST['placa']
     Objeto_Visitahtml = request.POST['objetivovisita']
     Observacionhtml = request.POST['observacion']
-    modeloregistro=Registro.objects.create(Tipo_Documento=Tipo_Documentohtml,
-                                            Numero=Numerohtml,
-                                            Nombres =Nombreshtml,
-                                            Apellidos = Apellidoshtml , 
-                                            Lugar_Procedencia =Lugar_Procedenciahtml,
-                                            Correo = Correohtml,
-                                            Telefono = Telefonohtml ,
-                                            Fecha_Ingreso = Fecha_Ingresohtml,
-                                            Fecha_Salida = Fecha_Salidahtml,
-                                            Tipo_Vinculacion=Tipo_Vinculacionhtml ,
-                                            Dependencia = Dependenciahtml,
-                                            Tipo_Vehiculo =Tipo_Vehiculohtml,
-                                            Placa_Vehiculo = Placa_Vehiculohtml,
-                                            Objeto_Visita= Objeto_Visitahtml,
-                                            Observacion = Observacionhtml)
+    image_data = request.POST.get('image_data', None)
+    
+    if image_data:
+        format, imgstr = image_data.split(';base64,') 
+        ext = format.split('/')[-1] 
+        image_data = ContentFile(base64.b64decode(imgstr), name='photo.' + ext)
+    else:
+        image_data = None
+
+    modeloregistro = Registro.objects.create(
+        Tipo_Documento=Tipo_Documentohtml,
+        Numero=Numerohtml,
+        Nombres=Nombreshtml,
+        Apellidos=Apellidoshtml,
+        Lugar_Procedencia=Lugar_Procedenciahtml,
+        Correo=Correohtml,
+        Telefono=Telefonohtml,
+        Fecha_Ingreso=Fecha_Ingresohtml,
+        Fecha_Salida=Fecha_Salidahtml,
+        Tipo_Vinculacion=Tipo_Vinculacionhtml,
+        Dependencia=Dependenciahtml,
+        Tipo_Vehiculo=Tipo_Vehiculohtml,
+        Placa_Vehiculo=Placa_Vehiculohtml,
+        Objeto_Visita=Objeto_Visitahtml,
+        Observacion=Observacionhtml,
+        foto=image_data
+    )
     return redirect('paginaprincipal')
 
 
 def registroexistente(request):
     if request.method == 'POST':
         documento = request.POST.get('documento')
-        try:
-            # Buscar el registro por número de documento
-            registro = Registro.objects.get(Numero=documento)
-            # Mostrar el registro encontrado, independientemente de si está actualizado o no
-            return render(request, 'Registrarexistente.html', {'registro': registro})
-        except Registro.DoesNotExist:
-            # Manejar el caso en que no se encuentra el registro
+        # Buscar registros por número de documento
+        registros = Registro.objects.filter(Numero=documento)
+        
+        if registros.exists():
+            # Si existen registros, mostrar el primero encontrado y la lista de todos los registros
+            return render(request, 'Registrarexistente.html', {'registros': registros, 'registro': registros.first()})
+        else:
+            # Manejar el caso en que no se encuentra ningún registro
             return render(request, 'Registrarexistente.html', {'error': 'No se encontró un registro con ese documento.'})
+    
     return render(request, 'Registrarexistente.html')
 
 def listarregistrossalida(request):

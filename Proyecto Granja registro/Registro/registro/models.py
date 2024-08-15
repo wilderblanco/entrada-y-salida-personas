@@ -22,6 +22,8 @@ class Registro(models.Model):
     Objeto_Visita = models.TextField(max_length=100)
     Observacion = models.TextField(max_length=100)
     Actualizado = models.BooleanField(default=False)  # Nuevo campo
+    foto = models.ImageField(upload_to='fotos/', blank=True, null=True)
+    
     
     def save(self, *args, **kwargs):
             # Aplicar capitalización a los campos que lo requieren

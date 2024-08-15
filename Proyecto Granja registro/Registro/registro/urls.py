@@ -1,5 +1,8 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
  path('',views.Pagina_Principal, name='paginaprincipal'),
@@ -13,4 +16,4 @@ urlpatterns = [
  path('logout/', views.exit , name="exit"),
  path('capture_photo/', views.capture_photo, name='capture_photo'),
  path('eliminar/<id>', views.eliminarregistro, name="eliminar")
- ]
+ ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
